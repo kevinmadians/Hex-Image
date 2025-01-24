@@ -1,0 +1,30 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="630" fill="#1E293B"/>
+  <rect x="0" y="0" width="1200" height="630" fill="url(#gradient)"/>
+  
+  <!-- Logo -->
+  <g transform="translate(400, 215)">
+    <circle cx="50" cy="50" r="40" fill="#3B82F6" opacity="0.9"/>
+    <circle cx="150" cy="50" r="30" fill="#8B5CF6" opacity="0.9"/>
+    <circle cx="230" cy="50" r="35" fill="#EF4444" opacity="0.9"/>
+    <circle cx="300" cy="50" r="25" fill="#10B981" opacity="0.9"/>
+    <circle cx="350" cy="50" r="30" fill="#F59E0B" opacity="0.9"/>
+  </g>
+  
+  <!-- Text -->
+  <text x="600" y="400" text-anchor="middle" font-family="system-ui, -apple-system" font-size="64" font-weight="bold" fill="white">
+    Hex Image
+  </text>
+  <text x="600" y="460" text-anchor="middle" font-family="system-ui, -apple-system" font-size="32" fill="#94A3B8">
+    Free Online Image Color Picker Tool
+  </text>
+  
+  <!-- Gradient Definition -->
+  <defs>
+    <linearGradient id="gradient" x1="0" y1="0" x2="1200" y2="630" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#1E293B"/>
+      <stop offset="50%" stop-color="#0F172A"/>
+      <stop offset="100%" stop-color="#1E293B"/>
+    </linearGradient>
+  </defs>
+</svg> 
