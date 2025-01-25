@@ -1,5 +1,5 @@
 import React from 'react';
-import { Lock, Eye, Server, Cookie, Bell } from 'lucide-react';
+import { Lock, Eye, Server, Cookie, Bell, Mail } from 'lucide-react';
 
 interface PrivacyProps {
   isDarkMode?: boolean;
@@ -119,6 +119,25 @@ const Privacy: React.FC<PrivacyProps> = ({ isDarkMode = false }) => {
               <li>Posting the new policy on this page</li>
               <li>Updating the "last updated" date at the top of this policy</li>
               <li>Providing a notice on our homepage</li>
+            </ul>
+          </div>
+        </section>
+
+        <section>
+          <div className="flex items-center gap-3 mb-4">
+            <div className={`p-2 rounded-lg ${isDarkMode ? 'bg-teal-900/20' : 'bg-teal-50'}`}>
+              <Mail className="h-6 w-6 text-teal-500" />
+            </div>
+            <h2 className={`text-2xl font-semibold ${isDarkMode ? 'text-gray-100' : 'text-gray-900'}`}>
+              Contact Us
+            </h2>
+          </div>
+          <div className={`${isDarkMode ? 'bg-gray-800' : 'bg-white'} rounded-xl p-6 shadow-lg`}>
+            <p className={`${isDarkMode ? 'text-gray-300' : 'text-gray-600'} mb-4`}>
+              If you have any questions about this Privacy Policy, please contact us at:
+            </p>
+            <ul className={`list-disc pl-5 ${isDarkMode ? 'text-gray-300' : 'text-gray-600'} space-y-2`}>
+              <li>Email: support@imagehex.com</li>
             </ul>
           </div>
         </section>

@@ -1,4 +1,4 @@
-# Hex Image Color Picker
+# Image Hex Color Picker
 
 A powerful online tool for extracting colors from images and generating color palettes. Built with React, TypeScript, and Tailwind CSS.
 

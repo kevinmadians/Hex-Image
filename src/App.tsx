@@ -106,15 +106,20 @@ function App({ isDarkMode }: AppProps) {
     const magCtx = magnifier.getContext('2d');
     if (!ctx || !magCtx) return;
 
-    const magnifierSize = 100;
-    const zoomLevel = 4;
+    const magnifierSize = 120;
+    const zoomLevel = 12;
     const radius = magnifierSize / 2;
 
+    // Set magnifier canvas dimensions
+    magnifier.width = magnifierSize;
+    magnifier.height = magnifierSize;
+    
     magCtx.clearRect(0, 0, magnifierSize, magnifierSize);
 
+    // Create circular clip path
     magCtx.save();
     magCtx.beginPath();
-    magCtx.arc(radius, radius, radius, 0, 2 * Math.PI);
+    magCtx.arc(radius, radius, radius - 2, 0, 2 * Math.PI);
     magCtx.clip();
 
     // Calculate the area to zoom - centered exactly on the cursor position
@@ -124,6 +129,9 @@ function App({ isDarkMode }: AppProps) {
     // Ensure we stay within canvas bounds
     const sourceX = Math.max(0, Math.min(x - halfSourceSize, canvas.width - sourceSize));
     const sourceY = Math.max(0, Math.min(y - halfSourceSize, canvas.height - sourceSize));
+
+    // Disable image smoothing for pixel-perfect display
+    magCtx.imageSmoothingEnabled = false;
 
     // Draw the magnified image
     magCtx.drawImage(
@@ -142,20 +150,19 @@ function App({ isDarkMode }: AppProps) {
     magCtx.strokeStyle = 'rgba(255, 255, 255, 0.8)';
     magCtx.lineWidth = 1;
     magCtx.beginPath();
-    magCtx.moveTo(radius - 4, radius);
-    magCtx.lineTo(radius + 4, radius);
-    magCtx.moveTo(radius, radius - 4);
-    magCtx.lineTo(radius, radius + 4);
+    magCtx.moveTo(radius - 6, radius);
+    magCtx.lineTo(radius + 6, radius);
+    magCtx.moveTo(radius, radius - 6);
+    magCtx.lineTo(radius, radius + 6);
     magCtx.stroke();
 
     // Draw border
+    magCtx.restore();
     magCtx.strokeStyle = 'white';
     magCtx.lineWidth = 2;
     magCtx.beginPath();
-    magCtx.arc(radius, radius, radius - 1, 0, 2 * Math.PI);
+    magCtx.arc(radius, radius, radius - 2, 0, 2 * Math.PI);
     magCtx.stroke();
-
-    magCtx.restore();
   }, [isPickingColor]);
 
   const getMagnifierPosition = useCallback((x: number, y: number) => {
@@ -163,7 +170,7 @@ function App({ isDarkMode }: AppProps) {
     if (!canvas) return { left: 0, top: 0 };
 
     const rect = canvas.getBoundingClientRect();
-    const magnifierSize = 100;
+    const magnifierSize = 120;
     const margin = 20;
 
     // Position magnifier above cursor by default
@@ -398,19 +405,19 @@ function App({ isDarkMode }: AppProps) {
                       <div className="absolute h-full w-0.5 bg-white left-1/2 -translate-x-1/2" />
                     </div>
                     <div 
-                      className="absolute pointer-events-none rounded-full overflow-hidden"
+                      className="absolute pointer-events-none"
                       style={{
                         left: getMagnifierPosition(cursorPosition.x, cursorPosition.y).left,
                         top: getMagnifierPosition(cursorPosition.x, cursorPosition.y).top,
-                        width: '100px',
-                        height: '100px'
+                        width: '120px',
+                        height: '120px'
                       }}
                     >
                       <canvas
                         ref={magnifierRef}
-                        width="100"
-                        height="100"
-                        className="rounded-full"
+                        width="120"
+                        height="120"
+                        className="w-[120px] h-[120px] rounded-full"
                       />
                     </div>
                   </>
@@ -439,7 +446,7 @@ function App({ isDarkMode }: AppProps) {
                     <div className={`px-2.5 py-1 rounded-full text-xs ${
                       isDarkMode ? 'bg-green-500/20 text-green-300' : 'bg-green-100 text-green-600'
                     }`}>
-                      🟢 Pick Color is Active
+                      🟢 Pick Color Active
                     </div>
                   </div>
                 )}
@@ -534,19 +541,19 @@ function App({ isDarkMode }: AppProps) {
                 {selectedImage && (
                   <div className={`${
                     isDarkMode ? 'bg-gray-700' : 'bg-gray-50'
-                  } rounded-lg p-2 animate-fade-in mt-2`}>
-                    <div className="flex items-center space-x-3">
+                  } rounded-lg p-3 animate-fade-in mt-2`}>
+                    <div className="flex items-start space-x-4">
                       <div
-                        className={`w-10 h-10 rounded-lg shadow-inner ${isDarkMode ? 'ring-1 ring-white/10' : 'ring-1 ring-black/5'}`}
+                        className={`w-16 h-16 rounded-lg shadow-inner flex-shrink-0 ${isDarkMode ? 'ring-1 ring-white/10' : 'ring-1 ring-black/5'}`}
                         style={{ backgroundColor: pickedColor?.hex || 'transparent' }}
                       />
-                      <div className="flex-1 grid grid-cols-2 gap-3">
+                      <div className="flex-1 space-y-3">
                         <div>
-                          <div className={`text-[10px] font-medium mb-1 ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>
+                          <div className={`text-xs font-medium mb-1.5 ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>
                             HEX
                           </div>
-                          <div className="flex items-center space-x-1">
-                            <code className={`px-2 py-1 rounded text-xs flex-1 font-medium ${
+                          <div className="flex items-center space-x-2">
+                            <code className={`px-3 py-2 rounded text-sm flex-1 font-medium ${
                               isDarkMode ? 'bg-gray-800 text-gray-200' : 'bg-white text-gray-900 border border-gray-200'
                             }`}>
                               {pickedColor?.hex || '-'}
@@ -558,7 +565,7 @@ function App({ isDarkMode }: AppProps) {
                                   handleCopyClick(pickedColor.hex, 'HEX');
                                 }
                               }}
-                              className={`p-1 rounded relative ${
+                              className={`p-2 rounded relative ${
                                 isDarkMode
                                   ? 'text-gray-400 hover:text-white hover:bg-gray-600'
                                   : 'text-gray-500 hover:text-blue-600 hover:bg-gray-100'
@@ -569,16 +576,16 @@ function App({ isDarkMode }: AppProps) {
                                   Copied!
                                 </span>
                               )}
-                              <Copy className="h-3 w-3" />
+                              <Copy className="h-4 w-4" />
                             </button>
                           </div>
                         </div>
                         <div>
-                          <div className={`text-[10px] font-medium mb-1 ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>
+                          <div className={`text-xs font-medium mb-1.5 ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>
                             RGB
                           </div>
-                          <div className="flex items-center space-x-1">
-                            <code className={`px-2 py-1 rounded text-xs flex-1 font-medium ${
+                          <div className="flex items-center space-x-2">
+                            <code className={`px-3 py-2 rounded text-sm flex-1 font-medium ${
                               isDarkMode ? 'bg-gray-800 text-gray-200' : 'bg-white text-gray-900 border border-gray-200'
                             }`}>
                               {pickedColor?.rgb || '-'}
@@ -590,7 +597,7 @@ function App({ isDarkMode }: AppProps) {
                                   handleCopyClick(pickedColor.rgb, 'RGB');
                                 }
                               }}
-                              className={`p-1 rounded relative ${
+                              className={`p-2 rounded relative ${
                                 isDarkMode
                                   ? 'text-gray-400 hover:text-white hover:bg-gray-600'
                                   : 'text-gray-500 hover:text-blue-600 hover:bg-gray-100'
@@ -601,7 +608,7 @@ function App({ isDarkMode }: AppProps) {
                                   Copied!
                                 </span>
                               )}
-                              <Copy className="h-3 w-3" />
+                              <Copy className="h-4 w-4" />
                             </button>
                           </div>
                         </div>
@@ -616,7 +623,7 @@ function App({ isDarkMode }: AppProps) {
       </div>
       <div className="mt-2 text-center">
         <p className={`text-xs italic ${isDarkMode ? 'text-gray-500' : 'text-gray-400'}`}>
-          Your images are processed locally and are never uploaded to any server
+          images are processed locally and never uploaded to any server
         </p>
       </div>
 

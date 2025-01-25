@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Palette, Sun, Moon } from 'lucide-react';
+import { Pipette, Sun, Moon } from 'lucide-react';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -35,7 +35,7 @@ const Layout: React.FC<LayoutProps> = ({ children, isDarkMode, setIsDarkMode }) 
                   ? 'bg-gradient-to-br from-gray-700/50 to-gray-600/50 ring-1 ring-white/10 group-hover:from-gray-700 group-hover:to-gray-600' 
                   : 'bg-blue-50 ring-1 ring-blue-100 group-hover:bg-blue-100'
               } shadow-sm backdrop-blur-sm transition-all`}>
-                <Palette className={`h-4 w-4 ${isDarkMode ? 'text-blue-400' : 'text-blue-500'} filter drop-shadow`} />
+                <Pipette className={`h-4 w-4 ${isDarkMode ? 'text-blue-400' : 'text-blue-500'} filter drop-shadow`} />
               </div>
               <div className="flex flex-col">
                 <h1 className={`text-lg font-bold ${
@@ -137,11 +137,10 @@ const Layout: React.FC<LayoutProps> = ({ children, isDarkMode, setIsDarkMode }) 
               <div className="flex items-center space-x-2 text-sm">
                 <span>Made with</span>
                 <span className="text-red-500 animate-pulse text-lg">❤️</span>
-                <span>by Hex Image Team</span>
               </div>
               
               <div className="text-sm">
-                <p>© {new Date().getFullYear()} Hex Image. All rights reserved.</p>
+                <p>© {new Date().getFullYear()} Image Hex. All rights reserved.</p>
               </div>
             </div>
           </div>

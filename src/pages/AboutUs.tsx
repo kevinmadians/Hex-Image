@@ -10,7 +10,7 @@ const AboutUs: React.FC<AboutUsProps> = ({ isDarkMode = false }) => {
     <div className="max-w-4xl mx-auto px-4 py-12">
       <div className="text-center mb-12">
         <h1 className="text-4xl font-bold mb-4 bg-gradient-to-r from-blue-500 to-purple-600 text-transparent bg-clip-text">
-          About Hex Image
+          About Image Hex
         </h1>
         <p className={`${isDarkMode ? 'text-gray-300' : 'text-gray-600'} max-w-2xl mx-auto`}>
           Empowering creators with powerful color extraction tools since 2024
